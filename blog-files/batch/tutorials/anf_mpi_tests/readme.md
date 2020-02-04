@@ -10,7 +10,7 @@
 1. Clone the repo from github to your local machine
    1. cd ~/ 
    1. git clone https://github.com/JonShelley/azure.git
-1. cd ~/azure/blog-files/examples/anf
+1. cd ~/azure/blog-files/batch/examples/anf
 1. Set the variables in the top section of setup_batch_with_anf.sh to the desired values
 1. bash setup_batch_with_anf.sh (wait for it to complete before going on to the next step)
 1. Login to newly created jump host in $infra_rg resource group (default name batchex${region}-jb)

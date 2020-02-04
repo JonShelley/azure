@@ -9,8 +9,8 @@ vnet_2_octets="10.2"
 
 # Batch variables
 # Note: batch_name can only have 3-24 lowercase alphanumeric characters
-batch_name=batchex${region}
-storage_account_name=${batch_name}storage
+batch_name=bex${region}
+storage_account_name=bex${region}
 storage_blob=batch
 pool_id=HC
 pool_vm_size=Standard_HC44rs
@@ -67,7 +67,8 @@ az network vnet subnet create -g $infra_rg --vnet-name hpcvnet -n anf \
 #
 # Setup ANF
 #
-
+# Disable the extention
+az extension remove -n netappfiles-preview
 az netappfiles account create \
   --resource-group $infra_rg \
   --account-name $anf_account_name \
