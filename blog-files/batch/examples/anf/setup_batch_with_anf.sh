@@ -17,7 +17,7 @@ pool_vm_size=Standard_HC44rs
 
 # ANF variables
 anf_account_name="anf-ex-${region}"
-anf_pool_name="anf-pools-${region}"
+anf_pool_name="anf-ex-pools-${region}"
 service_lvl="Premium"
 apps_path=ex-apps
 data_path=ex-data
@@ -206,7 +206,7 @@ az keyvault create \
 
 # Add batch service to the keyvault policies
 az keyvault set-policy \
-  --name ${batch_name}keyvault \
+  --name ${batch_name}kv \
   --resource-group $batch_rg \
   --secret-permissions get list set delete \
   --spn MicrosoftAzureBatch
@@ -219,7 +219,7 @@ az batch account create \
   -n $batch_name \
   -g $batch_rg \
   --tags 'creator=joshelle' \
-  --keyvault ${batch_name}keyvault \
+  --keyvault ${batch_name}kv \
   --storage-account $storage_account_name
 
 # Login to batch account
