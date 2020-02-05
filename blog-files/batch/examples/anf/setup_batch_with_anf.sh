@@ -6,11 +6,11 @@ batch_rg=ex-batch-${region}
 infra_rg=ex-infra-${region}
 sub_id="<Replace with subscription id>"
 vnet_2_octets="10.2"
-
 # Batch variables
-# Note: batch_name can only have 3-24 lowercase alphanumeric characters
+# Note: batch_name and storage_account_name need to be unique and are limited to 3-24 lowercase alphanumeric characters
+# I recommend that you add your initials or 3 random letters at the end of batch_name. 
 batch_name=batchex
-storage_account_name=bex${region}
+storage_account_name=${batch_name}${region}
 storage_blob=batch
 pool_id=HC
 pool_vm_size=Standard_HC44rs
