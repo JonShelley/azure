@@ -9,7 +9,7 @@ vnet_2_octets="10.2"
 
 # Batch variables
 # Note: batch_name can only have 3-24 lowercase alphanumeric characters
-batch_name=bex${region}
+batch_name=batchex
 storage_account_name=bex${region}
 storage_blob=batch
 pool_id=HC
@@ -199,7 +199,7 @@ az vm create \
 #
 az keyvault create \
   --location $region \
-  --name ${batch_name}keyvault \
+  --name ${batch_name}kv \
   --resource-group $batch_rg \
   --enabled-for-deployment true \
   --enabled-for-template-deployment true
