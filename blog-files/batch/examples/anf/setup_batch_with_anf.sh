@@ -4,7 +4,7 @@
 region=westus2
 batch_rg=ex-batch-${region}
 infra_rg=ex-infra-${region}
-sub_id="<Replace with subscription id>"
+sub_id=<Replace with subscription id>
 vnet_2_octets="10.2"
 # Batch variables
 # Note: batch_name and storage_account_name need to be unique and are limited to 3-24 lowercase alphanumeric characters
