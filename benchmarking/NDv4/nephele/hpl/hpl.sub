@@ -1,0 +1,16 @@
+#!/bin/bash
+#SBATCH -t 00:20:00
+#SBATCH --ntasks-per-node=8
+#SBATCH -o logs/%x_%j.log
+
+CONT='nvcr.io/nvidia/hpc-benchmarks:20.10-hpl'
+MOUNT='/share/home/nvidia/hpl/dats/hpl-${SLURM_JOB_NUM_NODES}N.dat:/workspace/hpl-linux-x86_64/sample-dat/HPL-dgx-a100-${SLURM_JOB_NUM_NODES}N.dat'
+echo "Running on hosts: $(echo $(control show hostname))"
+
+export OMPI_MCA_pml=ucx
+export OMPI_MCA_btl=^openib,smcuda
+export UCX_NET_DEVICES=mlx5_0:1
+
+CMD="hpl.sh --cpu-affinity 24-35:36-47:0-11:12-23:72-83:84-95:48-59:60-71 --cpu-cores-per-rank 12 --gpu-affinity 0:1:2:3:4:5:6:7 --mem-affinity 1:1:0:0:3:3:2:2  --ucx-affinity mlx5_0:mlx5_1:mlx5_2:mlx5_3:mlx5_4:mlx5_5:mlx5_6:mlx5_7 --dat /workspace/hpl-linux-x86_64/sample-dat/HPL-dgx-a100-${SLURM_JOB_NUM_NODES}N.dat"
+
+srun --gpus-per-node=8 --container-image="${CONT}" --container-mounts="${MOUNT}" ${CMD}
