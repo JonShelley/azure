@@ -3,7 +3,7 @@
 - This work leverages the nephele project found at https://github.com/NVIDIA/nephele to deploy the environment
 - Once the environment is deployed, it uses containers obtained from https://ngc.nvidia.com/catalog/containers/
 
-## Requirements
+## Getting Started
 - Install nephele on your deployment machine
   - git clone https://github.com/NVIDIA/nephele.git
   - edit the nephele.conf file
