@@ -5,16 +5,16 @@
 
 ## Requirements
 - Install nephele on your deployment machine
--- git clone https://github.com/NVIDIA/nephele.git
--- edit the nephele.conf file
---- update the azure section
---- update ...
--- ./nephele.sh init
+  - git clone https://github.com/NVIDIA/nephele.git
+  - edit the nephele.conf file
+    - update the azure section
+    - update ...
+  - ./nephele.sh init
 - Configure nephele to deploy Standard_ND96asr_v4 VMs
--- More to follow
+  - More to follow
 - Deploy nephele cluster
--- ./nephele.sh create
+  - ./nephele.sh create
 - Connect to the login node
--- ./nephele.sh connect
+  - ./nephele.sh connect
 
 **** Special thanks to the Nvidia team for their help and support ****
