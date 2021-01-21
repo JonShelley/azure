@@ -53,7 +53,7 @@ sudo systemctl start nvidia-fabricmanager
 
 ### Install HPC-X
 cd /mnt
-HPCX_URL=https://azhpcstor.blob.core.windows.net/azhpc-images-store/hpcx-v2.7.2-gcc-MLNX_OFED_LINUX-5.1-2.4.6.0-ubuntu18.04-x86_64.tbz
+HPCX_URL=https://bmhpcwus2.blob.core.windows.net/share/hpcx/hpcx-v2.7.3-gcc-MLNX_OFED_LINUX-5.1-2.4.6.0-ubuntu18.04-x86_64.tbz
 wget $HPCX_URL
 HPCX_FILE=$(basename $HPCX_URL) # Extract filename of tarball
 tar -xvf $HPCX_FILE
