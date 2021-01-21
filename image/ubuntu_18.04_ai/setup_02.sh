@@ -28,3 +28,12 @@ git checkout v2.0.x-ar
 ./configure --prefix=/usr/local/nccl-rdma-sharp-plugins --with-cuda=/usr/local/cuda
 make
 sudo make install
+
+# Build the nccl tests
+cd /opt/msft
+HPCX_DIR=hpcx-v
+git clone https://github.com/NVIDIA/nccl-tests.git
+. /opt/${HPCX_DIR}*/hpcx-init.sh
+hpcx_load
+cd nccl-tests
+make MPI=1
