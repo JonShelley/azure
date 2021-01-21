@@ -91,6 +91,8 @@ cd nvidia-peer-memory-1.1/
 dpkg-buildpackage -us -uc 
 sudo dpkg -i ../nvidia-peer-memory_1.1-0_all.deb 
 sudo dpkg -i ../nvidia-peer-memory-dkms_1.1-0_all.deb 
+sudo make
+sudo make install
 lsmod | grep nv
 
 # Install gdrcopy
