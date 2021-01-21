@@ -43,6 +43,24 @@ wget https://developer.download.nvidia.com/compute/redist/dcgm/${DCGM_VERSION}/D
 sudo dpkg -i datacenter-gpu-manager_*.deb && \
 sudo rm -f datacenter-gpu-manager_*.deb
 
+# Create service for dcgm to launch on bootup
+sudo bash -c "cat > /etc/systemd/system/dcgm.service" <<'EOF'
+[Unit]
+Description=DCGM service
+
+[Service]
+User=root
+PrivateTmp=false
+ExecStart=/usr/bin/nv-hostengine -n
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
+EOF
+sudo systemctl enable dcgm
+sudo systemctl start dcgm
+
+
 
 ### Install nvidia fabric manager (required for ND96asr_v4)
 cd /mnt
