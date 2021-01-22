@@ -79,7 +79,7 @@ HPCX_DIR=$( echo $HPCX_FILE | rev | cut -f 2- -d '.' | rev  )
 sudo mv $HPCX_DIR /opt
 
 # Install NV Peer Memory (GPU Direct RDMA)
-sudo apt install -y dkms
+sudo apt install -y dkms libnuma-dev
 cd /mnt
 git clone https://github.com/Mellanox/nv_peer_memory.git
 cd nv_peer_memory*/
