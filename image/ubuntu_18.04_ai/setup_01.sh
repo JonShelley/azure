@@ -95,6 +95,10 @@ sudo make
 sudo make install
 lsmod | grep nv
 
+sudo bash -c "cat > /etc/modules-load.d/nv_peer_mem.conf" <<'EOF'
+nv_peer_mem
+EOF
+
 # Install gdrcopy
 sudo apt install -y check libsubunit0 libsubunit-dev build-essential devscripts debhelper check libsubunit-dev fakeroot
 cd /mnt
