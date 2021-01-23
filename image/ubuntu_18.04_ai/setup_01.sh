@@ -43,6 +43,24 @@ wget https://developer.download.nvidia.com/compute/redist/dcgm/${DCGM_VERSION}/D
 sudo dpkg -i datacenter-gpu-manager_*.deb && \
 sudo rm -f datacenter-gpu-manager_*.deb
 
+# Create service for dcgm to launch on bootup
+sudo bash -c "cat > /etc/systemd/system/dcgm.service" <<'EOF'
+[Unit]
+Description=DCGM service
+
+[Service]
+User=root
+PrivateTmp=false
+ExecStart=/usr/bin/nv-hostengine -n
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
+EOF
+sudo systemctl enable dcgm
+sudo systemctl start dcgm
+
+
 
 ### Install nvidia fabric manager (required for ND96asr_v4)
 cd /mnt
@@ -53,7 +71,7 @@ sudo systemctl start nvidia-fabricmanager
 
 ### Install HPC-X
 cd /mnt
-HPCX_URL=https://bmhpcwus2.blob.core.windows.net/share/hpcx/hpcx-v2.7.3-gcc-MLNX_OFED_LINUX-5.1-2.4.6.0-ubuntu18.04-x86_64.tbz
+HPCX_URL=https://content.mellanox.com/hpc/hpc-x/v2.8/hpcx-v2.8.0-gcc-MLNX_OFED_LINUX-5.1-0.6.6.0-ubuntu18.04-x86_64.tbz
 wget $HPCX_URL
 HPCX_FILE=$(basename $HPCX_URL) # Extract filename of tarball
 tar -xvf $HPCX_FILE
@@ -61,7 +79,7 @@ HPCX_DIR=$( echo $HPCX_FILE | rev | cut -f 2- -d '.' | rev  )
 sudo mv $HPCX_DIR /opt
 
 # Install NV Peer Memory (GPU Direct RDMA)
-sudo apt install -y dkms
+sudo apt install -y dkms libnuma-dev
 cd /mnt
 git clone https://github.com/Mellanox/nv_peer_memory.git
 cd nv_peer_memory*/
@@ -73,7 +91,13 @@ cd nvidia-peer-memory-1.1/
 dpkg-buildpackage -us -uc 
 sudo dpkg -i ../nvidia-peer-memory_1.1-0_all.deb 
 sudo dpkg -i ../nvidia-peer-memory-dkms_1.1-0_all.deb 
+sudo make
+sudo make install
 lsmod | grep nv
+
+sudo bash -c "cat > /etc/modules-load.d/nv_peer_mem.conf" <<'EOF'
+nv_peer_mem
+EOF
 
 # Install gdrcopy
 sudo apt install -y check libsubunit0 libsubunit-dev build-essential devscripts debhelper check libsubunit-dev fakeroot
