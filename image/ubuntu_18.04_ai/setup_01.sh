@@ -103,6 +103,7 @@ EOF
 sudo apt install -y check libsubunit0 libsubunit-dev build-essential devscripts debhelper check libsubunit-dev fakeroot
 cd /mnt
 git clone https://github.com/NVIDIA/gdrcopy.git
+git reset --hard 0b6e1f18018f929fccfc0115e273f551d158432f
 cd gdrcopy/packages/
 CUDA=/usr/local/cuda ./build-deb-packages.sh 
 sudo dpkg -i gdrdrv-dkms_2.1-1_amd64.deb 
