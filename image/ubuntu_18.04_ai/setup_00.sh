@@ -16,6 +16,7 @@ network:
         eth0:
             dhcp4: true
     version: 2
+    renderer: networkd
 EOF
 
 ### Place the topology file in /opt/msft
