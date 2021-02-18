@@ -1,24 +1,20 @@
 #!/bin/bash
 
-# This must be done manually since you need to download NCCL from NVIDIA
-if [ ! -f "/mnt/nccl-repo-ubuntu1804-2.8.3-ga-cuda11.0_1-1_amd64.deb" ]
-then
-    echo "Please run this after you have download nccl-repo-ubuntu1804-2.8.3-ga-cuda11.0_1-1_amd64.deb in /mnt"
-    echo "You can find it at https://developer.nvidia.com/nccl/nccl-download"
-    exit -1
-fi
-
-
-
 # Install NCCL
-cd /mnt
-sudo dpkg -i nccl-repo-ubuntu1804-2.8.3-ga-cuda11.0_1-1_amd64.deb
-sudo apt-key add /var/nccl-repo-2.8.3-ga-cuda11.0/7fa2af80.pub
-sudo apt update
-sudo apt install libnccl2 libnccl-dev
+sudo apt install -y build-essential devscripts debhelper fakeroot
+cd /tmp
+git clone https://github.com/NVIDIA/nccl.git
+cd nccl/
+git checkout v2.8.3-1
+git cherry-pick -x 99b8a0393ffa379f3b0b81f3d5c0baa6aad7abef
+make -j src.build
+make pkg.debian.build
+cd build/pkg/deb/
+sudo dpkg -i libnccl2_2.8.3-1+cuda11.0_amd64.deb
+sudo dpkg -i libnccl-dev_2.8.3-1+cuda11.0_amd64.deb
 
 # Install the nccl rdma sharp plugin
-cd /mnt
+cd /tmp
 mkdir -p /usr/local/nccl-rdma-sharp-plugins
 sudo apt install -y zlib1g-dev
 git clone https://github.com/Mellanox/nccl-rdma-sharp-plugins.git
