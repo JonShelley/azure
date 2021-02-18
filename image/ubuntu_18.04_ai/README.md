@@ -1,8 +1,5 @@
 # Instrutions for building a Ubuntu 18.04 image
 
-## Requirements:
-The following files must be on the machine (obtain from nvidia) for the setup_02.sh script to work
-- nccl-repo-ubuntu1804-2.8.3-ga-cuda11.0_1-1_amd64.deb
 
 ## Setup process
 Deploy a ND96asr_v4 VM with Ubuntu 18.04 LTS. I used (Canonical:UbuntuServer:18_04-lts-gen2:latest)
