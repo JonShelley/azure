@@ -84,10 +84,6 @@ EOF
 
 # Get the kernel patch
 sudo chmod 777 /mnt
-cd /mnt
-wget https://github.com/longlimsft/shared-binary/raw/master/linux-headers-5.4.73-revert-pci_5.4.73-revert-pci-1_amd64.deb
-wget https://github.com/longlimsft/shared-binary/raw/master/linux-image-5.4.73-revert-pci_5.4.73-revert-pci-1_amd64.deb
-sudo dpkg -i linux-headers-5.4.73-revert-pci_5.4.73-revert-pci-1_amd64.deb
-sudo dpkg -i linux-image-5.4.73-revert-pci_5.4.73-revert-pci-1_amd64.deb
+apt install -y linux-image-unsigned-5.4.0-1040-azure/bionic-updates
 
 sudo reboot
