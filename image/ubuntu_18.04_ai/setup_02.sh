@@ -64,7 +64,7 @@ sudo bash -c "cat > /opt/msft/nccl-2n.sh" <<'EOF'
 NODE1=$1
 NODE2=$2
 
-. /apps/hpcx-v*/hpcx-init.sh
+. /opt/hpcx-v*/hpcx-init.sh
 hpcx_load
 
 #    -x NCCL_DEBUG=INFO \
