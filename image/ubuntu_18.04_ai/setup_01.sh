@@ -3,6 +3,7 @@
 # Required OS: Ubuntu 18.04 LTS
 
 ### Install OFED
+cd /mnt
 DRIVER_URL=http://content.mellanox.com/ofed/MLNX_OFED-5.1-2.5.8.0/MLNX_OFED_LINUX-5.1-2.5.8.0-ubuntu18.04-x86_64.tgz
 wget $DRIVER_URL
 DRIVER_FILE=$(basename $DRIVER_URL) # Extract filename of tarball
