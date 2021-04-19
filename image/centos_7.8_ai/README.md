@@ -1,8 +1,6 @@
 # Instrutions for building a CentOS 7.8 AI image
 
 ## Requirements:
-The following files must be on the machine (obtain from nvidia) for the setup_02.sh script to work
-- nccl-repo-
 
 ## Setup process
 deploy a ND96asr_v4 VM with Ubuntu 18.04 LTS. I used (OpenLogic:CentOS-HPC:7_8-gen2:latest)

@@ -4,14 +4,14 @@
 #sudo
 
 ### Disable network for cloud init
-echo network: {config: disabled} | sudo tee /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg
-sudo bash -c "cat > /etc/netplan/50-cloud-init.yaml" <<'EOF'
-network:
-    ethernets:
-        eth0:
-            dhcp4: true
-    version: 2
-EOF
+#echo network: {config: disabled} | sudo tee /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg
+#sudo bash -c "cat > /etc/netplan/50-cloud-init.yaml" <<'EOF'
+#network:
+#    ethernets:
+#        eth0:
+#            dhcp4: true
+#    version: 2
+#EOF
 
 ### Place the topology file in /opt/msft
 sudo mkdir -p /opt/msft
