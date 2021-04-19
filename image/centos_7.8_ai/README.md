@@ -3,7 +3,7 @@
 ## Requirements:
 
 ## Setup process
-deploy a ND96asr_v4 VM with Ubuntu 18.04 LTS. I used (OpenLogic:CentOS-HPC:7_8-gen2:latest)
+deploy a ND96asr_v4 VM with CentOS 7.8. I used (OpenLogic:CentOS-HPC:7_8-gen2:latest)
  1. Run setup_00.sh (as root. Note: This will reboot the VM when finished)
  1. Log back into VM once rebooted
  1. Run setup_01.sh (as root)
