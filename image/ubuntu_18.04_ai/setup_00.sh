@@ -82,8 +82,10 @@ sudo bash -c "cat > /etc/udev/rules.d/60-rdma-persistent-naming.rules" <<'EOF'
 ACTION=="add", SUBSYSTEM=="infiniband", PROGRAM="rdma_rename %k NAME_PCI"
 EOF
 
-# Get the kernel patch
-sudo chmod 777 /mnt
-apt install -y linux-image-unsigned-5.4.0-1040-azure/bionic-updates
+# Change local disk permissions
+sudo chmod 1777 /mnt
 
-sudo reboot
+# Get the kernel patch
+#apt install -y linux-image-unsigned-5.4.0-1040-azure/bionic-updates
+
+#sudo reboot

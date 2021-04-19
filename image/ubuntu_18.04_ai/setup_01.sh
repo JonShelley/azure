@@ -3,7 +3,7 @@
 # Required OS: Ubuntu 18.04 LTS
 
 ### Install OFED
-DRIVER_URL=http://content.mellanox.com/ofed/MLNX_OFED-5.1-2.5.8.0/MLNX_OFED_LINUX-5.1-2.5.8.0-ubuntu18.04-x86_64.tgz
+DRIVER_URL=https://azhpcstor.blob.core.windows.net/azhpc-images-store/MLNX_OFED_LINUX-5.2-2.2.3.0-ubuntu18.04-x86_64.tgz
 wget $DRIVER_URL
 DRIVER_FILE=$(basename $DRIVER_URL) # Extract filename of tarball
 tar xzf $DRIVER_FILE           # Extract tarball
@@ -11,6 +11,15 @@ DRIVER_ROOT=${DRIVER_FILE%.*}       # Extract root without .tgz
 
 sudo ./$DRIVER_ROOT/mlnxofedinstall --add-kernel-support
 sudo /etc/init.d/openibd restart
+
+### Install HPC-X
+cd /mnt
+HPCX_URL=https://content.mellanox.com/hpc/hpc-x/v2.8.1/hpcx-v2.8.1-gcc-MLNX_OFED_LINUX-5.2-2.2.0.0-ubuntu18.04-x86_64.tbz
+wget $HPCX_URL
+HPCX_FILE=$(basename $HPCX_URL) # Extract filename of tarball
+tar -xvf $HPCX_FILE
+HPCX_DIR=$( echo $HPCX_FILE | rev | cut -f 2- -d '.' | rev  )
+sudo mv $HPCX_DIR /opt
 
 # Enable RDMA in waagent
 sudo sed -i -e 's/# OS.EnableRDMA=y/OS.EnableRDMA=y/g' /etc/waagent.conf
@@ -68,15 +77,6 @@ wget http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/n
 sudo apt install -y ./nvidia-fabricmanager-450_450.80.02-1_amd64.deb
 sudo systemctl enable nvidia-fabricmanager
 sudo systemctl start nvidia-fabricmanager
-
-### Install HPC-X
-cd /mnt
-HPCX_URL=https://content.mellanox.com/hpc/hpc-x/v2.8/hpcx-v2.8.0-gcc-MLNX_OFED_LINUX-5.1-0.6.6.0-ubuntu18.04-x86_64.tbz
-wget $HPCX_URL
-HPCX_FILE=$(basename $HPCX_URL) # Extract filename of tarball
-tar -xvf $HPCX_FILE
-HPCX_DIR=$( echo $HPCX_FILE | rev | cut -f 2- -d '.' | rev  )
-sudo mv $HPCX_DIR /opt
 
 # Install NV Peer Memory (GPU Direct RDMA)
 sudo apt install -y dkms libnuma-dev
