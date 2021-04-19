@@ -96,7 +96,7 @@ sudo systemctl status nvidia-dcgm
 sudo nvidia-smi -pm 1
 
 ### Install nvidia fabric manager (required for ND96asr_v4)
-yum install -y cuda-drivers-fabricmanager-$DRIVER_VERSION
+yum install -y nvidia-fabricmanager-460
 sudo systemctl enable nvidia-fabricmanager.service
 sudo systemctl start nvidia-fabricmanager.service
 
