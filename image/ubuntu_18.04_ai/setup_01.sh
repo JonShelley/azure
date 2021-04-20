@@ -39,10 +39,11 @@ chmod 755 NVIDIA-Linux-x86_64-${DRIVER_VERSION}.run
 sudo ./NVIDIA-Linux-x86_64-${DRIVER_VERSION}.run -s
 
 # Install Cuda
+mkdir -p /mnt/tmp
 cd /mnt
 wget https://developer.download.nvidia.com/compute/cuda/11.2.2/local_installers/cuda_11.2.2_460.32.03_linux.run
 chmod +x cuda_11.*_linux.run
-sudo ./cuda_11.*_linux.run --silent --toolkit --samples --tmpdir=/mnt/resource/tmp --installpath=/usr/local/cuda
+sudo ./cuda_11.*_linux.run --silent --toolkit --samples --tmpdir=/mnt/tmp --installpath=/usr/local/cuda
 echo 'export PATH=$PATH:/usr/local/cuda/bin' | sudo tee -a /etc/bash.bashrc
 echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64' | sudo tee -a /etc/bash.bashrc
 

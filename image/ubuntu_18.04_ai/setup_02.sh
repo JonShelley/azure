@@ -10,8 +10,8 @@ git cherry-pick -x 99b8a0393ffa379f3b0b81f3d5c0baa6aad7abef
 make -j src.build
 make pkg.debian.build
 cd build/pkg/deb/
-sudo dpkg -i libnccl2_2.8.3-1+cuda11.0_amd64.deb
-sudo dpkg -i libnccl-dev_2.8.3-1+cuda11.0_amd64.deb
+sudo dpkg -i libnccl2_2.8.3-1+cuda11.2_amd64.deb
+sudo dpkg -i libnccl-dev_2.8.3-1+cuda11.2_amd64.deb
 
 # Install the nccl rdma sharp plugin
 cd /tmp
