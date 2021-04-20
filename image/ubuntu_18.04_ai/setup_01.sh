@@ -33,15 +33,16 @@ sudo systemctl restart walinuxagent
 
 # Install the Nvidia driver and follow the prompts
 cd /mnt
-wget https://us.download.nvidia.com/XFree86/Linux-x86_64/450.80.02/NVIDIA-Linux-x86_64-450.80.02.run
-chmod 755 NVIDIA-Linux-x86_64-450.80.02.run
-sudo ./NVIDIA-Linux-x86_64-450.80.02.run -s
+DRIVER_VERSION=460.32.03
+wget https://us.download.nvidia.com/XFree86/Linux-x86_64/${DRIVER_VERSION}/NVIDIA-Linux-x86_64-${DRIVER_VERSION}.run
+chmod 755 NVIDIA-Linux-x86_64-${DRIVER_VERSION}.run
+sudo ./NVIDIA-Linux-x86_64-${DRIVER_VERSION}.run -s
 
 # Install Cuda
 cd /mnt
-wget https://developer.download.nvidia.com/compute/cuda/11.0.3/local_installers/cuda_11.0.3_450.51.06_linux.run
-chmod +x cuda_11.0.3_450.51.06_linux.run
-sudo ./cuda_11.0.3_450.51.06_linux.run --silent --toolkit --samples
+wget https://developer.download.nvidia.com/compute/cuda/11.2.2/local_installers/cuda_11.2.2_460.32.03_linux.run
+chmod +x cuda_11.*_linux.run
+sudo ./cuda_11.*_linux.run --silent --toolkit --samples --tmpdir=/mnt/resource/tmp --installpath=/usr/local/cuda
 echo 'export PATH=$PATH:/usr/local/cuda/bin' | sudo tee -a /etc/bash.bashrc
 echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64' | sudo tee -a /etc/bash.bashrc
 
@@ -73,8 +74,8 @@ sudo systemctl start dcgm
 
 ### Install nvidia fabric manager (required for ND96asr_v4)
 cd /mnt
-wget http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/nvidia-fabricmanager-450_450.80.02-1_amd64.deb
-sudo apt install -y ./nvidia-fabricmanager-450_450.80.02-1_amd64.deb
+wget http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/nvidia-fabricmanager-460_460.32.03-1_amd64.deb
+sudo apt install -y ./nvidia-fabricmanager-460_460.32.03-1_amd64.deb
 sudo systemctl enable nvidia-fabricmanager
 sudo systemctl start nvidia-fabricmanager
 
