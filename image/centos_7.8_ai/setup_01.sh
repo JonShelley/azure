@@ -80,10 +80,10 @@ echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64' | sudo tee 
 
 # Install the Nvidia driver and follow the prompts
 cd /mnt/resource
-DRIVER_VERSION=460.32.03
-wget https://download.nvidia.com/XFree86/Linux-x86/$DRIVER_VERSION/NVIDIA-Linux-x86_64-${DRIVER_VERSION}.run
-chmod 755 NVIDIA-Linux-x86_64-${DRIVER_VERSION}.run
-sudo ./NVIDIA-Linux-x86_64-${DRIVER_VERSION}.run --silent
+NVIDIA_DRIVER_URL=https://download.nvidia.com/XFree86/Linux-x86_64/460.32.03/NVIDIA-Linux-x86_64-460.32.03.run
+wget $NVIDIA_DRIVER_URL
+chmod 755 NVIDIA-Linux-x86_64-460.32.03.run
+sudo ./NVIDIA-Linux-x86_64-460.32.03.run --silent
 
 ### Install nvidia fabric manager (required for ND96asr_v4)
 cd /mnt/resource
