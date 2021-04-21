@@ -86,6 +86,9 @@ chmod 755 NVIDIA-Linux-x86_64-${DRIVER_VERSION}.run
 sudo ./NVIDIA-Linux-x86_64-${DRIVER_VERSION}.run --silent
 
 ### Install nvidia fabric manager (required for ND96asr_v4)
+cd /mnt/resource
+NVIDIA_FABRIC_MNGR_URL=http://developer.download.nvidia.com/compute/cuda/repos/rhel7/x86_64/nvidia-fabricmanager-460-460.32.03-1.x86_64.rpm
+wget $NVIDIA_FABRIC_MNGR_URL
 yum install -y nvidia-fabricmanager-460-460.32.03-1.x86_64.rpm
 sudo systemctl enable nvidia-fabricmanager.service
 sudo systemctl start nvidia-fabricmanager.service
