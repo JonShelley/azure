@@ -4,12 +4,14 @@
 cd /mnt/resource
 git clone https://github.com/NVIDIA/nccl.git
 cd nccl/
-git checkout v2.8.3-1
+git checkout v2.8.4-1
 git cherry-pick -x 99b8a0393ffa379f3b0b81f3d5c0baa6aad7abef
+git cherry-pick -x ef5f37461fdbf11104cf0ee13da80d80b84b4cbc
 make -j src.build
 make pkg.redhat.build
-cd build/pkg/rpm/x86_64
-sudo yum install -y libnccl-2.8.3-1+cuda11.2.x86_64.rpm  libnccl-devel-2.8.3-1+cuda11.2.x86_64.rpm  libnccl-static-2.8.3-1+cuda11.2.x86_64.rpm
+rpm -i ./build/pkg/rpm/x86_64/libnccl-2.8.4-1+cuda11.2.x86_64.rpm
+rpm -i ./build/pkg/rpm/x86_64/libnccl-devel-2.8.4-1+cuda11.2.x86_64.rpm
+rpm -i ./build/pkg/rpm/x86_64/libnccl-static-2.8.4-1+cuda11.2.x86_64.rpm
 
 # Install the nccl rdma sharp plugin
 cd /mnt/resource
@@ -29,7 +31,7 @@ git clone https://github.com/NVIDIA/nccl-tests.git
 . /opt/${HPCX_DIR}*/hpcx-init.sh
 hpcx_load
 cd nccl-tests
-make MPI=1
+make MPI=1 MPI_HOME=${HPCX_MPI_DIR} CUDA_HOME=/usr/local/cuda
 
 # Add 1 node nccl test
 sudo bash -c "cat > /opt/msft/nccl-1n.sh" <<'EOF'

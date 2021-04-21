@@ -69,34 +69,24 @@ echo "OS.MonitorDhcpClientRestartPeriod=60" | sudo tee -a /etc/waagent.conf
 echo "Provisioning.MonitorHostNamePeriod=60" | sudo tee -a /etc/waagent.conf
 sudo systemctl restart waagent
 
-# Install the Nvidia driver and follow the prompts
-#cd /mnt/resource
-#DRIVER_VERSION=460.32.03
-#wget https://us.download.nvidia.com/tesla/$DRIVER_VERSION/NVIDIA-Linux-x86_64-${DRIVER_VERSION}.run
-#chmod 755 NVIDIA-Linux-x86_64-${DRIVER_VERSION}.run
-#sudo ./NVIDIA-Linux-x86_64-${DRIVER_VERSION}.run -s
-
 # Install Cuda
 mkdir /mnt/resource/tmp
 cd /mnt/resource
 wget https://developer.download.nvidia.com/compute/cuda/11.2.2/local_installers/cuda_11.2.2_460.32.03_linux.run
-chmod +x cuda_11.*_linux.run
-sudo ./cuda_11.*_linux.run --silent --toolkit --samples --tmpdir=/mnt/resource/tmp
+chmod +x cuda_11.2.2_460.32.03_linux.run
+sudo ./cuda_11.2.2_460.32.03_linux.run --silent --tmpdir=/mnt/resource/tmp
 echo 'export PATH=$PATH:/usr/local/cuda/bin' | sudo tee -a /etc/bash.bashrc
 echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64' | sudo tee -a /etc/bash.bashrc
 
-### Install DCGM
-yum install -y dnf
-dnf install -y 'dnf-command(config-manager)'
-sudo dnf config-manager --add-repo https://developer.download.nvidia.com/compute/cuda/repos/rhel7/x86_64/cuda-rhel7.repo
-sudo dnf clean expire-cache 
-sudo dnf install -y datacenter-gpu-manager
-sudo systemctl --now enable nvidia-dcgm
-sudo systemctl status nvidia-dcgm
-sudo nvidia-smi -pm 1
+# Install the Nvidia driver and follow the prompts
+cd /mnt/resource
+DRIVER_VERSION=460.32.03
+wget https://download.nvidia.com/XFree86/Linux-x86/$DRIVER_VERSION/NVIDIA-Linux-x86_64-${DRIVER_VERSION}.run
+chmod 755 NVIDIA-Linux-x86_64-${DRIVER_VERSION}.run
+sudo ./NVIDIA-Linux-x86_64-${DRIVER_VERSION}.run --silent
 
 ### Install nvidia fabric manager (required for ND96asr_v4)
-yum install -y nvidia-fabricmanager-460-460.32.03-1
+yum install -y nvidia-fabricmanager-460-460.32.03-1.x86_64.rpm
 sudo systemctl enable nvidia-fabricmanager.service
 sudo systemctl start nvidia-fabricmanager.service
 
@@ -130,3 +120,14 @@ make
 sanity 
 copybw
 copylat
+
+### Install DCGM
+yum install -y dnf
+dnf install -y 'dnf-command(config-manager)'
+sudo dnf config-manager --add-repo https://developer.download.nvidia.com/compute/cuda/repos/rhel7/x86_64/cuda-rhel7.repo
+sudo dnf clean expire-cache 
+sudo dnf install -y datacenter-gpu-manager
+sudo systemctl --now enable nvidia-dcgm
+sudo systemctl status nvidia-dcgm
+sudo nvidia-smi -pm 1
+
