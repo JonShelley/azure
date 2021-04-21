@@ -70,18 +70,18 @@ echo "Provisioning.MonitorHostNamePeriod=60" | sudo tee -a /etc/waagent.conf
 sudo systemctl restart waagent
 
 # Install the Nvidia driver and follow the prompts
-cd /mnt/resource
-DRIVER_VERSION=460.32.03
-wget https://us.download.nvidia.com/tesla/$DRIVER_VERSION/NVIDIA-Linux-x86_64-${DRIVER_VERSION}.run
-chmod 755 NVIDIA-Linux-x86_64-${DRIVER_VERSION}.run
-sudo ./NVIDIA-Linux-x86_64-${DRIVER_VERSION}.run -s
+#cd /mnt/resource
+#DRIVER_VERSION=460.32.03
+#wget https://us.download.nvidia.com/tesla/$DRIVER_VERSION/NVIDIA-Linux-x86_64-${DRIVER_VERSION}.run
+#chmod 755 NVIDIA-Linux-x86_64-${DRIVER_VERSION}.run
+#sudo ./NVIDIA-Linux-x86_64-${DRIVER_VERSION}.run -s
 
 # Install Cuda
 mkdir /mnt/resource/tmp
 cd /mnt/resource
 wget https://developer.download.nvidia.com/compute/cuda/11.2.2/local_installers/cuda_11.2.2_460.32.03_linux.run
 chmod +x cuda_11.*_linux.run
-sudo ./cuda_11.*_linux.run --silent --toolkit --samples --tmpdir=/mnt/resource/tmp --installpath=/usr/local/cuda
+sudo ./cuda_11.*_linux.run --silent --toolkit --samples --tmpdir=/mnt/resource/tmp
 echo 'export PATH=$PATH:/usr/local/cuda/bin' | sudo tee -a /etc/bash.bashrc
 echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64' | sudo tee -a /etc/bash.bashrc
 
@@ -96,7 +96,7 @@ sudo systemctl status nvidia-dcgm
 sudo nvidia-smi -pm 1
 
 ### Install nvidia fabric manager (required for ND96asr_v4)
-yum install -y nvidia-fabricmanager-460
+yum install -y nvidia-fabricmanager-460-460.32.03-1
 sudo systemctl enable nvidia-fabricmanager.service
 sudo systemctl start nvidia-fabricmanager.service
 

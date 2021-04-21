@@ -1,15 +1,5 @@
 #!/bin/bash
 
-# This must be done manually since you need to download NCCL from NVIDIA
-if [ ! -f "/mnt/nccl-repo-ubuntu1804-2.8.3-ga-cuda11.0_1-1_amd64.deb" ]
-then
-    echo "Please run this after you have download nccl-repo-ubuntu1804-2.8.3-ga-cuda11.0_1-1_amd64.deb in /mnt"
-    echo "You can find it at https://developer.nvidia.com/nccl/nccl-download"
-    exit -1
-fi
-
-
-
 # Install NCCL
 cd /mnt/resource
 git clone https://github.com/NVIDIA/nccl.git
