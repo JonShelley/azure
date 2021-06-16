@@ -104,6 +104,10 @@ case "${cluster}" in
         # Need to specialize for selene because IB detection is hard
         ibdevs=(mlx5_0 mlx5_1 mlx5_2 mlx5_3 mlx5_4 mlx5_5 mlx5_6 mlx5_7)
 	;;
+    azure)
+        # Need to specialize for azure
+        ibdevs=(ibP257p0s0 ibP258p0s0 ibP259p0s0 ibP260p0s0 ibP261p0s0 ibP262p0s0 ibP263p0s0 ibP264p0s0)
+        ;;
     '')
         if ibstat_out="$(ibstat -l 2>/dev/null | sort -V)" ; then
             mapfile -t ibdevs <<< "${ibstat_out}"
