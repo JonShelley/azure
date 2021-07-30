@@ -163,6 +163,7 @@ fi
 mkdir -m 1777 -p /mnt/resource/slurm
 
 # Write PMIx settings for slurm
+if [ -d "/etc/sysconfig" ]; then
 cat << END >> /etc/sysconfig/slurmd
 
 PMIX_MCA_ptl=^usock
@@ -171,6 +172,7 @@ PMIX_SYSTEM_TMPDIR=/var/empty
 PMIX_MCA_gds=hash
 HWLOC_COMPONENTS=-opencl
 END
+fi
 
 # Update the config file to use prologues and epilogs.
 sed -i "s/SchedulerParameters=max_switch_wait=24:00:00/SchedulerParameters=max_switch_wait=24:00:00,nohold_on_prolog_fail,Ignore_NUMA,enable_user_top/g" /etc/slurm/slurm.conf
