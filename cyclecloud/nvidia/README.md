@@ -2,7 +2,7 @@
 
 ## Requirements
 * CycleCloud 8.1+
-* Ubuntu 18.04 (Will add 20.04 later)
+* Ubuntu 18.04 for the deployed cluster (Will add 20.04 later)
 * Python 3
 * CentOS VM (Can be the cyclecloud srv) to build Slurm and Ubuntu 18.04 VM to convert the rpms to .deb files
 * A bit of patience. :)
