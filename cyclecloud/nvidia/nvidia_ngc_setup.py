@@ -36,19 +36,20 @@ ENROOT_ROOTFS_WRITABLE yes
 END
 
 # Install Pyxis
-cd /mnt/resource
-git clone https://github.com/NVIDIA/pyxis.git
-cd pyxis
-#git checkout v0.11.0
-git checkout v0.9.1
-sed -i "s/, libslurm-dev//g" debian/control
-make orig
-make deb
-sudo dpkg -i ../nvslurm-plugin-pyxis_*_amd64.deb
-#sudo mkdir -p /etc/slurm/plugstack.conf.d
-#sudo make install
+if [ ! -d "/mnt/resource/pyxis" ]; then
+    cd /mnt/resource
+    git clone https://github.com/NVIDIA/pyxis.git
+    cd pyxis
+    #git checkout v0.11.0
+    git checkout v0.9.1
+    sed -i "s/, libslurm-dev//g" debian/control
+    make orig
+    make deb
+fi
+sudo dpkg -i /mnt/resource/nvslurm-plugin-pyxis_*_amd64.deb
+sudo mkdir -p /etc/slurm/plugstack.conf.d
 echo "include /etc/slurm/plugstack.conf.d/*.conf" | sudo tee -a /etc/slurm/plugstack.conf
-sudo ln -s /usr/share/pyxis/pyxis.conf /etc/slurm/plug
+sudo ln -s /usr/share/pyxis/pyxis.conf /etc/slurm/plugstack.conf.d/pyxis.conf
 
 # pyxis fstab
 echo "/usr/share/pyxis/entrypoint /etc/rc.local none x-create=file,bind,ro,nosuid,nodev,noexec,nofail,silent" | sudo tee /etc/enroot/mounts.d/90-pyxis.fstab
