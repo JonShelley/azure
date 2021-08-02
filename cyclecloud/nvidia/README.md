@@ -58,29 +58,16 @@ cd ../../install/v3/
 - cd cc-slurm-nvidia/specs/default/cluster-init/files
 - sudo ./00-build-slurm.sh
 
-## Deploy the Ubuntu 18.04 VM to convert the rpms to .debs
-### Download the cli from the cyclecloud server
-- sudo apt -y update (Ubuntu only)
-- sudo apt install -y python3-venv (Ubuntu only)
-- sudo apt install -y zip libtool build-essential flex libevent-dev (Ubuntu only)
-- wget --no-check-certificate https://13.64.134.151/static/tools/cyclecloud-cli.zip
-- unzip cyclecloud-cli.zip
-- cd cyclecloud-cli-installer
-- ./install.sh
+### Convert the rpms to .debs
+Modify 01-build-debs.sh
+ Comment out line 2:
+ - #apt-get update
+ Modify line 3 and replace apt-get with yum
+ - yum install -y alien
 
-### Initialized the cyclecloud cli
-- cyclecloud initialize
-
-### Fetch the cyclecloud project
-- cyclecloud project fetch https://github.com/Azure/cyclecloud-slurm/releases/2.4.6 cc-slurm-nvidia
-
-### Copy over the files from the CentOS CycleCloud Server to the Ubuntu Box
-- sudo scp -r -i <id_rsa> /root/rpmbuild azureuser@<cyclecloud srv ip>:
-
-### Convert rpms to .deb files
-- cd ~/cc-slurm-nvidia/specs/default/cluster-init/files
-- sudo ./01-build-debs.sh
-
+Now run 01-build-debs.sh with sudo
+ - sudo ./01-build-debs.sh
+ 
 ### Copy the .deb files to correct directory and then upload them
 - cp ~/rpmbuild/RPMS/x86\_64/\*.deb ~/cc-slurm-nvidia/blobs/.
 - cyclecloud project upload <cc-storage-account>
@@ -102,16 +89,13 @@ Open a web browser and go to your cyclecloud server (https://cc-srv-ip)
 
 Once you have logged in to your cyclecloud server:
 _Note:_ If this is your first time logging in you will need to fill out some information before you can proceed
-- Select the "+" button (in the bottom left corner) to create your new cluster- In the _Schedulers_ section, select slurm-ngc
- - About:
-  - Add the desired cluster name
- - Required Settings:
-  - Select the desired region
-  - Change HPC VM Type to use GPUs
+
+Use the following link to learn more about creating a cluster (https://docs.microsoft.com/en-us/azure/cyclecloud/how-to/create-cluster?view=cyclecloud-8) 
+ Tips: 
+ - In the _Schedulers_ section, select slurm-ngc
+ - Change HPC VM Type to use GPUs
    - In the SKU Search bar type ND then select either ND40rs\_v2 or ND96asr\_v4
   - Update value from Max HPC Cores to the desired # of VMs * # of cores/VM
-  - ....
-
 
 
 
