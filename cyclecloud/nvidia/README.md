@@ -32,6 +32,7 @@ Once deployed go to the new resource and record the ip address. Now ssh into you
 - yum groupinstall -y "Development Tools"
 
 ### Put the following lines in a script to build and install PMIx (build_pmix.sh)
+```
 #!/bin/bash
   
 cd ~/
@@ -49,7 +50,8 @@ cd ../build/v3/
 ../../source/configure --prefix=/opt/pmix/v3
 make -j install >/dev/null
 cd ../../install/v3/
-
+```
+ 
 ### Install PMIx
 - chmod 755 build_pmix.sh
 - sudo ./build_pmix.sh
@@ -97,5 +99,11 @@ Use the following link to learn more about creating a cluster (https://docs.micr
    - In the SKU Search bar type ND then select either ND40rs\_v2 or ND96asr\_v4
   - Update value from Max HPC Cores to the desired # of VMs * # of cores/VM
 
+ ## Update the VMs once provisioned
+ Once the Scheduler and Compute VMs have been provisioned, clone the following github repo (github.com/JonShelley/azure) and run the following scripts on them
+ - azure/cyclecloud/nvidia/nvidia_ngc_setup.py
+ - azure/cyclecloud/nvidia/update_hosts_file.sh
+ 
+ At this point the system should be ready to run the scripts in azure/benchmarking/NDv4/nephele/nccl. You may need to update the run script to point to the correct directories.
 
 
