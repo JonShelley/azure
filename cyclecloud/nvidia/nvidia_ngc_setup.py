@@ -20,6 +20,7 @@ sudo apt install -y ./*.deb
 enroot version
 
 mkdir -m 1777 -p /mnt/resource/enroot/tmp
+chmod 1777 /mnt/resource/enroot
 echo "@reboot mkdir -m 1777 -p /mnt/resource/enroot" | crontab
 sudo crontab -l
 
@@ -35,13 +36,27 @@ ENROOT_RESTRICT_DEV=yes
 ENROOT_ROOTFS_WRITABLE yes
 END
 
+# Copy over the enroot hooks
+cp /usr/share/enroot/hooks.d/50*.sh /etc/enroot/hooks.d/.
+
+# Copy over the environ.d env file
+cat << END >> /etc/enroot/environ.d/50-visible-devices.env
+NVIDIA_VISIBLE_DEVICES=all
+NVIDIA_DRIVER_CAPABILITIES=all
+MELLANOX_VISIBLE_DEVICES=all
+END
+
+# link the bash completion file
+ln -s /usr/share/enroot/bash_completion /etc/bash_completion.d/enroot.bash_completion
+
+
 # Install Pyxis
 if [ ! -d "/mnt/resource/pyxis" ]; then
     cd /mnt/resource
     git clone https://github.com/NVIDIA/pyxis.git
     cd pyxis
-    #git checkout v0.11.0
-    git checkout v0.9.1
+    git checkout v0.11.0
+    #git checkout v0.9.1
     sed -i "s/, libslurm-dev//g" debian/control
     make orig
     make deb
@@ -77,26 +92,8 @@ exec "\$@"
 END
 
 sudo chmod 755 /usr/share/pyxis/entrypoint
-
-
 cd -
 
-# Install pmix
-#cd /mnt/resource
-#mkdir -p /opt/pmix/v3
-#apt install -y libevent-dev
-#mkdir -p pmix/build/v3 pmix/install/v3
-#cd pmix
-#git clone https://github.com/openpmix/openpmix.git source
-#cd source/
-#git branch -a
-#git checkout v3.1
-#git pull
-#./autogen.sh
-#cd ../build/v3/
-#../../source/configure --prefix=/opt/pmix/v3
-#make -j install >/dev/null
-#cd ../../install/v3/
 
 # Build PMIx
 mkdir -p -m 1777 /shared/src
@@ -121,8 +118,7 @@ fi
 
 # Install PMIx
 apt install -y /shared/src/pmix/libpmix2_3.1.2-3_amd64.deb
-
-
+apt install -y /shared/src/pmix/libpmix-dev_3.1.2-3_amd64.deb
 
 # Install Docker and NVIDIA Docker                                                       
 #### Install Docker                                                       
@@ -208,8 +204,15 @@ fi
 ln -s /sched/prolog.d /etc/slurm/prolog.d
 ln -s /sched/epilog.d /etc/slurm/epilog.d
 
+# Copy over additional files
+cp -r /mnt/resource/nephele/ansible/roles/slurm/files/etc/slurm/cgroup_allowed_devices_file.conf /etc/slurm/cgroup_allowed_devices_file.conf 
+
 
 # Restart Slurm
 sudo systemctl restart slurmd
 sudo systemctl restart slurmctld
+
+# Load modules
+modprobe nvidia-uvm
+modprobe nvidia-modeset
 
