@@ -124,8 +124,9 @@ apt install -y /shared/src/pmix/libpmix-dev_3.1.2-3_amd64.deb
 #### Install Docker                                                       
 cd /mnt/resource
 sudo apt install -y docker.io
-sudo systemctl start docker
-sudo docker run hello-world
+sudo systemctl stop docker
+sudo sh -c "echo '{  \"data-root\": \"/mnt/resource/docker\", \"bip\": \"152.26.0.1/16\", \"runtimes\": { \"nvidia\": { \"path\": \"/usr/bin/nvidia-container-runtime\", \"runtimeArgs\": [] } } }' > /etc/docker/daemon.json"
+sudo systemctl restart docker
 
 #### Install NV-DOCKER                                                       
 cd /mnt/resource
