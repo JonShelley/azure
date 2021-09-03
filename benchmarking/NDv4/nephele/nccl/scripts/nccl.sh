@@ -3,7 +3,7 @@
 export UCX_IB_ENABLE_CUDA_AFFINITY=n \
        UCX_IB_PCI_RELAXED_ORDERING=on \
        UCX_TLS=rc \
-       UCX_NET_DEVICES=mlx5_0:1 \
+       UCX_NET_DEVICES=mlx5_ib0:1,mlx5_ib1:1,mlx5_ib2:1,mlx5_ib3:1,mlx5_ib4:1,mlx5_ib5:1,mlx5_ib6:1,mlx5_ib7:1 \
        NCCL_DEBUG=INFO \
        CUDA_DEVICE_ORDER=PCI_BUS_ID \
        NCCL_IB_PCI_RELAXED_ORDERING=1 \
@@ -11,7 +11,7 @@ export UCX_IB_ENABLE_CUDA_AFFINITY=n \
        NCCL_TOPO_FILE=/nccl-tests/topo.xml
 
 CONT="nvcr.io#nvidia/pytorch:20.10-py3"
-MOUNT="/nfs/azure/benchmarking/NDv4/nephele/nccl:/nccl-tests,/nfs/hpcx-v2.7.4-gcc-MLNX_OFED_LINUX-5.1-0.6.6.0-ubuntu18.04-x86_64:/opt/hpcx"
+MOUNT="/shared/data/azure/benchmarking/NDv4/nephele/nccl:/nccl-tests,/opt/hpcx-v2.8.3-gcc-MLNX_OFED_LINUX-5.2-2.2.3.0-ubuntu18.04-x86_64:/opt/hpcx"
 
 export OMPI_MCA_pml=ucx
 export OMPI_MCA_btl=^openib
