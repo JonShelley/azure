@@ -94,39 +94,27 @@ END
 sudo chmod 755 /usr/share/pyxis/entrypoint
 cd -
 
-
-# Build PMIx
-mkdir -p -m 1777 /shared/src
-if [ ! -d /shared/src/pmix ]; then
-    apt-get -y update && apt-get -y install --no-install-recommends \
-        ca-certificates \
-        devscripts      \
-        fakeroot        \
-        gnupg2
-
-    mkdir -p /shared/src/pmix && cd /shared/src/pmix
-
-    echo 'deb-src http://old-releases.ubuntu.com/ubuntu disco universe' > /etc/apt/sources.list.d/disco.list
-    apt-get -y update && apt-get -y build-dep pmix
-    apt-get -y source pmix
-
-    cd pmix*/ && debuild -us -uc -G -i -tc
-
-    cd ..
-]
-fi
-
 # Install PMIx
-apt install -y /shared/src/pmix/libpmix2_3.1.2-3_amd64.deb
-apt install -y /shared/src/pmix/libpmix-dev_3.1.2-3_amd64.deb
+cd ~/
+mkdir -p /opt/pmix/v3
+apt install -y libevent-dev
+mkdir -p pmix/build/v3 pmix/install/v3
+cd pmix
+git clone https://github.com/openpmix/openpmix.git source
+cd source/
+git branch -a
+git checkout v3.1
+git pull
+./autogen.sh
+cd ../build/v3/
+../../source/configure --prefix=/opt/pmix/v3
+make -j install >/dev/null
+cd ../../install/v3/
 
 # Install Docker and NVIDIA Docker                                                       
 #### Install Docker                                                       
 cd /mnt/resource
 sudo apt install -y docker.io
-sudo systemctl stop docker
-sudo sh -c "echo '{  \"data-root\": \"/mnt/resource/docker\", \"bip\": \"152.26.0.1/16\", \"runtimes\": { \"nvidia\": { \"path\": \"/usr/bin/nvidia-container-runtime\", \"runtimeArgs\": [] } } }' > /etc/docker/daemon.json"
-sudo systemctl restart docker
 
 #### Install NV-DOCKER                                                       
 cd /mnt/resource
@@ -142,7 +130,10 @@ curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.li
   sudo tee /etc/apt/sources.list.d/nvidia-docker.list
 sudo apt-get update
 sudo apt-get install -y nvidia-docker2
-sudo pkill -SIGHUP dockerd
+
+sudo systemctl stop docker
+sudo sh -c "echo '{  \"data-root\": \"/mnt/resource/docker\", \"bip\": \"152.26.0.1/16\", \"runtimes\": { \"nvidia\": { \"path\": \"/usr/bin/nvidia-container-runtime\", \"runtimeArgs\": [] } } }' > /etc/docker/daemon.json"
+sudo systemctl restart docker
 sudo docker run --runtime=nvidia --rm nvidia/cuda:11.0-base nvidia-smi
 
 # Adjust the kernel settings 
@@ -162,6 +153,9 @@ mkdir -m 1777 -p /mnt/resource/slurm
 
 # Write PMIx settings for slurm
 if [ -d "/etc/sysconfig" ]; then
+    mkdir -p /etc/sysconfi
+fi 
+
 cat << END >> /etc/sysconfig/slurmd
 
 PMIX_MCA_ptl=^usock
