@@ -1,3 +1,3 @@
 [submodule "benchmarking/NDv4/nephele/nccl/nccl-tests"]
-	path = benchmarking/NDv4/nephele/nccl/nccl-tests
+	path = benchmarking/NDv4/cc-slurm-ngc/nccl/nccl-tests
 	url = https://github.com/NVIDIA/nccl-tests.git

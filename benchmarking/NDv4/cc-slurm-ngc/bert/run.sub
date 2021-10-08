@@ -42,7 +42,7 @@ set -eux
 # Other vars
 readonly _logfile_base="${LOGDIR}/${DATESTAMP}"
 readonly _cont_name=language_model
-readonly _cont_mounts="/data/azure/benchmarking/NDv4/nephele/bert/azure.sh:/workspace/bert/azure.sh,/data/azure/benchmarking/NDv4/nephele/nccl/scripts/nccl.multinode.topo.xml:/data/nccl/scripts/nccl.multinode.topo.xml,${DATADIR}:/workspace/data,${DATADIR_PHASE2}:/workspace/data_phase2,${CHECKPOINTDIR}:/results,${CHECKPOINTDIR_PHASE1}:/workspace/phase1,${EVALDIR}:/workspace/evaldata"
+readonly _cont_mounts="/data/azure/benchmarking/NDv4/cc-slurm-ngc/bert/azure.sh:/workspace/bert/azure.sh,/data/azure/benchmarking/NDv4/cc-slurm-ngc/nccl/scripts/nccl.multinode.topo.xml:/data/nccl/scripts/nccl.multinode.topo.xml,${DATADIR}:/workspace/data,${DATADIR_PHASE2}:/workspace/data_phase2,${CHECKPOINTDIR}:/results,${CHECKPOINTDIR_PHASE1}:/workspace/phase1,${EVALDIR}:/workspace/evaldata"
 export NCCL_IB_PCI_RELAXED_ORDERING=1
 export UCX_IB_ENABLE_CUDA_AFFINITY=n
 export UCX_IB_PCI_RELAXED_ORDERING=on

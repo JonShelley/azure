@@ -4,7 +4,7 @@
 #SBATCH -o logs/%x_%j.log
 
 CONT='nvcr.io/nvidia/hpc-benchmarks:20.10-hpl'
-MOUNT='/nfs/azure/benchmarking/NDv4/nephele/hpl/dats/hpl-${SLURM_JOB_NUM_NODES}N.dat:/workspace/hpl-linux-x86_64/sample-dat/HPL-dgx-a100-${SLURM_JOB_NUM_NODES}N.dat'
+MOUNT='/nfs/azure/benchmarking/NDv4/cc-slurm-ngc/hpl/dats/hpl-${SLURM_JOB_NUM_NODES}N.dat:/workspace/hpl-linux-x86_64/sample-dat/HPL-dgx-a100-${SLURM_JOB_NUM_NODES}N.dat'
 echo "Running on hosts: $(echo $(scontrol show hostname))"
 
 export OMPI_MCA_pml=ucx

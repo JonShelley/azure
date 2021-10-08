@@ -11,7 +11,7 @@ export UCX_IB_ENABLE_CUDA_AFFINITY=n \
        NCCL_TOPO_FILE=/nccl-tests/topo.xml
 
 CONT="nvcr.io#nvidia/pytorch:20.10-py3"
-MOUNT="/shared/data/azure/benchmarking/NDv4/nephele/nccl:/nccl-tests,/opt/hpcx-v2.8.3-gcc-MLNX_OFED_LINUX-5.2-2.2.3.0-ubuntu18.04-x86_64:/opt/hpcx"
+MOUNT="/shared/data/azure/benchmarking/NDv4/cc-slurm-ngc/nccl:/nccl-tests,/opt/hpcx-v2.8.3-gcc-MLNX_OFED_LINUX-5.2-2.2.3.0-ubuntu18.04-x86_64:/opt/hpcx"
 
 export OMPI_MCA_pml=ucx
 export OMPI_MCA_btl=^openib
