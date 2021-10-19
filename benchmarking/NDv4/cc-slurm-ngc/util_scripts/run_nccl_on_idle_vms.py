@@ -14,7 +14,7 @@ output = subprocess.run([cmd], stdout=subprocess.PIPE).stdout.decode('utf-8')
 lines = output.split("\n")
 vms = "empty"
 for line in lines:
-    if line.find(partition) != -1 and line.find("idle ") != -1:
+    if line[:len(partition)].find(partition) != -1 and line.find("idle ") != -1:
         vms = line.split()[-1]
         vms_prefix = vms.split("[")[0]
         tmp = re.search(r"\[([A-Za-z0-9_,-]+)\]", vms)
