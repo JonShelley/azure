@@ -18,71 +18,15 @@ Once deployed go to the new resource and record the ip address. Now ssh into you
 ### Install Python 3
 - sudo yum install -y python3
 
-### Download the project
-- cyclecloud project fetch https://github.com/Azure/cyclecloud-slurm/releases/2.4.6 cc-slurm-nvidia
-- cd cc-slurm-nvidia/specs/default/cluster-init/files
-- Modify 00-build-slurm.sh
- - yum config-manager --set-enabled PowerTools (Line 29: powertools does not work and needs to be camel cased)
-- Add the following after rpmbuild (line 41)
- - --define '_with_pmix --with-pmix=/opt/pmix/v3'
-- Add the line below after rpmbuild (line 42)
- - exit 0
-
-### Install packages required for PMIx
-- yum groupinstall -y "Development Tools"
-
-### Put the following lines in a script to build and install PMIx (build_pmix.sh)
-```
-#!/bin/bash
-  
-cd ~/
-mkdir -p /opt/pmix/v3
-apt install -y libevent-dev
-mkdir -p pmix/build/v3 pmix/install/v3
-cd pmix
-git clone https://github.com/openpmix/openpmix.git source
-cd source/
-git branch -a
-git checkout v3.1
-git pull
-./autogen.sh
-cd ../build/v3/
-../../source/configure --prefix=/opt/pmix/v3
-make -j install >/dev/null
-cd ../../install/v3/
-```
+### Download and setup the project
+- wget https://bmhpcwus2.blob.core.windows.net/share/cc-slurm/slurm-custom-v0.6.tgz
+- tar -xzvf slurm-custom-v0.6.tgz
+- cd slurm-custom
+- cyclecloud locker list ( To see what lockers you can upload to )
+- cyclecloud project upload <your-cyclecloud-locker>
+- cd templates
+- cyclecloud import_template slurm-ngc -f ./slurm-custom.txt -c slurm --force
  
-### Install PMIx
-- chmod 755 build_pmix.sh
-- sudo ./build_pmix.sh
-
-### Build Slurm
-- cd cc-slurm-nvidia/specs/default/cluster-init/files
-- sudo ./00-build-slurm.sh
-
-### Convert the rpms to .debs
-Modify 01-build-debs.sh
- Comment out line 2:
- - #apt-get update
- Modify line 3 and replace apt-get with yum
- - yum install -y alien
-
-Now run 01-build-debs.sh with sudo
- - sudo ./01-build-debs.sh
- 
-### Copy the .deb files to correct directory and then upload them
-- cp ~/rpmbuild/RPMS/x86\_64/\*.deb ~/cc-slurm-nvidia/blobs/.
-- cyclecloud project upload <cc-storage-account>
- - To find the available cc-storage-accounts run
-  - cyclecloud locker list
-
-### Update the Slurm template files and upload them
-_Note:_ 2.4.6 is the cyclecloud slurm release version used when the project was fetched.
-- cd ~/cc-slurm-nvidia/templates
-- sed -i "s/cyclecloud\/slurm:default/slurm:default:2.4.6/g" slurm.txt
-- sed -i "s/cyclecloud\/slurm:scheduler/slurm:scheduler:2.4.6/g" slurm.txt
-- sed -i "s/cyclecloud\/slurm:execute/slurm:execute:2.4.6/g" slurm.txt
-- cyclecloud import\_template slurm-ngc -f ./slurm.txt -c slurm
 
 _Note:_ At this point you are ready to deploy your cyclecloud cluster
 
@@ -96,14 +40,17 @@ Use the following link to learn more about creating a cluster (https://docs.micr
  Tips: 
  - In the _Schedulers_ section, select slurm-ngc
  - Change HPC VM Type to use GPUs
-   - In the SKU Search bar type ND then select either ND40rs\_v2 or ND96asr\_v4
+   - In the SKU Search bar type ND then select either ND96asr\_v4, or ND96amsr_A100_v4.
   - Update value from Max HPC Cores to the desired # of VMs * # of cores/VM
 
  ## Update the VMs once provisioned
- Once the Scheduler and Compute VMs have been provisioned, clone the following github repo (github.com/JonShelley/azure) and run the following scripts on them
- - azure/cyclecloud/nvidia/nvidia_ngc_setup.py
- - azure/cyclecloud/nvidia/update_hosts_file.sh
+ Once the Scheduler and Compute VMs have been provisioned
+ - mkdir -p /shared/data
+ - cd /shared/data
+ - git clone https://github.com/JonShelley/azure
  
- At this point the system should be ready to run the scripts in azure/benchmarking/NDv4/nephele/nccl. You may need to update the run script to point to the correct directories.
-
+At this point the system should be ready to run some quick tests to verify that the system is working as expected
+ - [HPL](https://github.com/JonShelley/azure/tree/master/benchmarking/NDv4/cc-slurm-ngc/hpl)
+ - [NCCL - All Reduce](https://github.com/JonShelley/azure/tree/master/benchmarking/NDv4/cc-slurm-ngc/nccl)
+ - [Utility scripts](https://github.com/JonShelley/azure/tree/master/benchmarking/NDv4/cc-slurm-ngc/util_scripts)
 
