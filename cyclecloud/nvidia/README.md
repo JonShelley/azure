@@ -43,7 +43,7 @@ Use the following link to learn more about creating a cluster (https://docs.micr
    - In the SKU Search bar type ND then select either ND96asr\_v4, or ND96amsr_A100_v4.
   - Update value from Max HPC Cores to the desired # of VMs * # of cores/VM
 
- ## Update the VMs once provisioned
+ ## Testing out the deployment
  Once the Scheduler and Compute VMs have been provisioned
  - mkdir -p /shared/data
  - cd /shared/data
