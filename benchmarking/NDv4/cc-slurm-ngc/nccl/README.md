@@ -1,20 +1,22 @@
-# Download HPCX
-cd \<desired location for HPC-X\>
-
-wget https://content.mellanox.com/hpc/hpc-x/v2.7.4/hpcx-v2.7.4-gcc-MLNX_OFED_LINUX-5.1-0.6.6.0-ubuntu18.04-x86_64.tbz
-
-tar -xjf hpcx-v2.7.4-gcc-MLNX_OFED_LINUX-5.1-0.6.6.0-ubuntu18.04-x86_64.tbz
-
-rm -rf hpcx-v2.7.4-gcc-MLNX_OFED_LINUX-5.1-0.6.6.0-ubuntu18.04-x86_64.tbz
-
 # Build NCCL tests
+Note: Insure that the nccl-test-build.sh script points to the right location for HPCX (Located in /opt on the Azure HPC marketplace images)
 cd scripts
 
 sbatch -N 1 nccl-test-build.sh
 
 # Run Single VM NCCL test
+Notes:
+ - Insure that the scripts/nccl.sh script points to the right location for HPCX (Located in /opt on the Azure HPC marketplace images)
+ - The output will be placed in logs/nccl_sub_<job_id>.log
+
+To run a single VM NCCL OSU all_reduce_perf test.
+- Expected values for size 8589934592 (B) is ~235 GB/s (Bus BW)
+
 sbatch -N 1 nccl.sub
 
 # Run Multi VM NCCL test
-## Replace \<x\> with the desired number of VMs
-sbatch -N \<x\> nccl.sub
+To run a Multi VM NCCL OSU all_reduce_perf test.
+- Expected values for size 8589934592 (B) on 2-32 VMs is 180-190 GB/s (Bus BW)
+
+sbatch -N <# of VMs> nccl.sub
+
