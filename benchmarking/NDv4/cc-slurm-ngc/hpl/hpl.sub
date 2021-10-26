@@ -11,7 +11,7 @@ env | grep -i slurm
 env | grep -i log
 
 CONT='nvcr.io/nvidia/hpc-benchmarks:21.4-hpl'
-MOUNT='/shared/data/azure/benchmarking/NDv4/nephele/hpl/dats/hpl-${SLURM_JOB_NUM_NODES}N.dat:/workspace/hpl-linux-x86_64/sample-dat/HPL-dgx-a100-${SLURM_JOB_NUM_NODES}N.dat'
+MOUNT='/shared/data/azure/benchmarking/NDv4/cc-slurn-ngc/hpl/dats/hpl-${SLURM_JOB_NUM_NODES}N.dat:/workspace/hpl-linux-x86_64/sample-dat/HPL-dgx-a100-${SLURM_JOB_NUM_NODES}N.dat'
 echo "Running on hosts: $(echo $(scontrol show hostname))"
 
 export OMPI_MCA_pml=ucx
