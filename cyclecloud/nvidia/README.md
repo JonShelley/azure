@@ -11,9 +11,6 @@ Go to the Azure portal and create your cyclecloud server. I recommend that you c
   - Fill out the requested information and deploy your CycleCloud server. 
 Once deployed go to the new resource and record the ip address. Now ssh into your cyclecloud server (i.e. ssh azureuser@<cc-srv-ip>) and follow the steps below
 
-### Install Python 3
-- sudo yum install -y python3 ( Not sure if this is required )
-
 ### Download and setup the project
 - wget https://bmhpcwus2.blob.core.windows.net/share/cc-slurm/slurm-custom-v0.6.tgz
 - tar -xzvf slurm-custom-v0.6.tgz
