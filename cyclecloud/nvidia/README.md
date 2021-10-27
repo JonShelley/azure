@@ -4,12 +4,14 @@
 * CycleCloud 8.1+
 
 ## Deploy the cyclecloud server and ssh into the VM
-Go to the Azure portal and create your cyclecloud server. I recommend that you create a new resource group (i.e cc-manager) and then select your newly created resource group and create your cyclecloud server.
-- Click the +Create button.
-  - In the search box type "Azure CycleCloud" and click on it.
-  - Select Azure CycleCloud 8.1(or higher) and click create
+_Note: Please follow [Cycle Cloud Quickstart guide](https://docs.microsoft.com/en-us/azure/cyclecloud/qs-install-marketplace?view=cyclecloud-8) with the below recommendations_
+
+__Recommendations:__
+- Create a new resource group (i.e cc-manager) and then select your newly created resource group and create your cyclecloud server.
+- Select Azure CycleCloud 8.1(or higher) and click create
     - Fill out the requested information and deploy your CycleCloud server.
-  - Server size: D4s_v4 (Recommended)
+- Server size: D4s_v4 (Recommended)
+
 Once deployed go to the new resource and record the ip address. Now ssh into your cyclecloud server (i.e. ssh azureuser@<cc-srv-ip>) and follow the steps below
 
 ### Download and setup the project
