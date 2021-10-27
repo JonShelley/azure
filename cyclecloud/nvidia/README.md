@@ -44,8 +44,10 @@ _Note: Only tested with Ubuntu-HPC 18.04 marketplace image_
  
  Tips: 
  - In the _Schedulers_ section, select slurm-ngc
- - Change HPC VM Type to use ND
-   - In the SKU Search bar type ND then select either ND96asr\_v4, or ND96amsr_A100_v4.
+ - In the "Required Settings" tab
+   - Uncheck "autoscale" if you don't want VMs to automatically shut off when nodes sit idle 
+   - Change HPC VM Type to use ND 
+     - In the SKU Search bar type ND then select either ND96asr\_v4, or ND96amsr_A100_v4.
   - Update value from Max HPC Cores to the desired # of VMs * # of cores/VM
  - In the "Advanced Settings" tab
    - Set the scheduler OS to use a custom image
@@ -53,9 +55,12 @@ _Note: Only tested with Ubuntu-HPC 18.04 marketplace image_
    - Set the HPC OS to use a custom image
      - microsoft-dsvm:ubuntu-hpc:1804:latest
    - If you plan to use the HTC partitions, I would recommned that you use the same OS image as the others
+   
  
 
  ## Testing out the deployment
+ _Note: If you don't want to deal with auto scaling when testing, add "SuspendExecParts=hpc" to /etc/slurm/slurm.conf and restart slurm (sudo systemctl restart slurmctld) once the scheduler has been deployed_
+    
  Once the Scheduler and Compute VMs have been provisioned, ssh into the scheduler and follow the instructions below
  - mkdir -p /shared/data
  - cd /shared/data
