@@ -11,8 +11,12 @@ __Recommendations:__
 - Select Azure CycleCloud 8.1(or higher) and click create
     - Fill out the requested information and deploy your CycleCloud server.
 - Server size: D4s_v4 (Recommended)
+- Create a uniquely named storage account (i.e. cc-storage-name) in your newly created resource group.
 
-Once deployed go to the new resource and record the ip address. Now ssh into your cyclecloud server (i.e. ssh azureuser@<cc-srv-ip>) and follow the steps below
+Once deployed:
+ - Go to the newly created Cycle Cloud server and record the ip address. 
+ - Login to the Cycle Cloud server in your Web Browser and do the initial setup of your Cycle Cloud server
+ - ssh into your cyclecloud server (i.e. ssh azureuser@<cc-srv-ip>) and follow the steps below
 
 ### Download and setup the project
 - wget https://bmhpcwus2.blob.core.windows.net/share/cc-slurm/slurm-custom-v0.6.tgz
