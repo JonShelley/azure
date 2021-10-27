@@ -19,11 +19,13 @@ Once deployed:
  - ssh into your cyclecloud server (i.e. ssh azureuser@<cc-srv-ip>) and follow the steps below
 
 ### Download and setup the project
+- cyclecloud initialize
+  - follow the command prompts
 - wget https://bmhpcwus2.blob.core.windows.net/share/cc-slurm/slurm-custom-v0.6.tgz
 - tar -xzvf slurm-custom-v0.6.tgz
 - cd slurm-custom
 - cyclecloud locker list ( To see what lockers you can upload to )
-- cyclecloud project upload <your-cyclecloud-locker>
+- cyclecloud project upload "\<your-cyclecloud-locker\>"
 - cd templates
 - cyclecloud import_template slurm-ngc -f ./slurm-custom.txt -c slurm --force
  
@@ -50,7 +52,7 @@ _Note: Only tested with Ubuntu-HPC 18.04 marketplace image_
      - microsoft-dsvm:ubuntu-hpc:1804:latest
    - Set the HPC OS to use a custom image
      - microsoft-dsvm:ubuntu-hpc:1804:latest
-   - If you plan to use the HTC and HB partitions, I would recommned that you use the same OS image as the others
+   - If you plan to use the HTC partitions, I would recommned that you use the same OS image as the others
  
 
  ## Testing out the deployment
