@@ -2,21 +2,17 @@
 
 ## Requirements
 * CycleCloud 8.1+
-* Ubuntu 18.04 for the deployed cluster (Will add 20.04 later)
-* Python 3
-* CentOS VM (Can be the cyclecloud srv) to build Slurm and Ubuntu 18.04 VM to convert the rpms to .deb files
-* A bit of patience. :)
 
 ## Deploy the cyclecloud server and ssh into the VM
 Go to the Azure portal and create your cyclecloud server. I recommend that you create a new resource group (i.e cc-manager) and then select your newly created resource group and create your cyclecloud server.
 - Click the +Create button.
  - In the search box type "Azure CycleCloud" and click on it.
- - Select Azure CycleCloud 8.1 and click create
+ - Select Azure CycleCloud 8.1(or higher) and click create
   - Fill out the requested information and deploy your CycleCloud server. 
 Once deployed go to the new resource and record the ip address. Now ssh into your cyclecloud server (i.e. ssh azureuser@<cc-srv-ip>) and follow the steps below
 
 ### Install Python 3
-- sudo yum install -y python3
+- sudo yum install -y python3 ( Not sure if this is required )
 
 ### Download and setup the project
 - wget https://bmhpcwus2.blob.core.windows.net/share/cc-slurm/slurm-custom-v0.6.tgz
