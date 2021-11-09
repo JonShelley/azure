@@ -5,6 +5,7 @@ import subprocess
 import re
 import shutil
 from pathlib import Path
+import os
 
 # Run sinfo and get idle VMs
 cmd="sinfo"
@@ -26,7 +27,8 @@ print("VMs values: {}".format(vms_values))
 
 # Run hpl job on each VM
 dir_name = 'hpl-tests'
-shutil.rmtree(dir_name)
+if os.path.isdir(dir_name):
+    shutil.rmtree(dir_name)
 Path( dir_name ).mkdir( parents=True, exist_ok=True )
 
 vm_list = vms_values.split(',')
