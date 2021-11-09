@@ -21,4 +21,4 @@ mpirun \
     -x NCCL_SOCKET_IFNAME=eth0 \
     -x NCCL_NET_GDR_LEVEL=5 \
     -x NCCL_TOPO_FILE=/opt/microsoft/ndv4-topo.xml \
-    /shared/data/azure/benchmarking/NDv4/nephele/nccl/nccl-tests/build/all_reduce_perf -b8 -f 2 -g 1 -e 8G
+    /shared/data/azure/benchmarking/NDv4/cc-slurm-ngc/nccl/nccl-tests/build/all_reduce_perf -b8 -f 2 -g 1 -e 8G
