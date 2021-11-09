@@ -4,4 +4,4 @@
 #SBATCH -o logs/%x_%j.log
 #SBATCH --mem=440gb
 #SBATCH --gpus-per-node=8
-./scripts/nccl.sh
+/shared/data/azure/benchmarking/NDv4/cc-slurm-ngc/nccl/scripts/nccl.sh
