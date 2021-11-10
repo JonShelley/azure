@@ -7,22 +7,27 @@ export UCX_IB_ENABLE_CUDA_AFFINITY=n \
        CUDA_DEVICE_ORDER=PCI_BUS_ID \
        NCCL_IB_PCI_RELAXED_ORDERING=1 \
        NCCL_SOCKET_IFNAME=eth0 \
-       NCCL_TOPO_FILE=/nccl-tests/topo.xml
+       NCCL_TOPO_FILE=/nccl/topo.xml
+#       NCCL_DEBUG=INFO \
 
-CONT="nvcr.io#nvidia/pytorch:20.10-py3"
-MOUNT="/shared/data/azure/benchmarking/NDv4/cc-slurm-ngc/nccl:/nccl,/opt/hpcx-v2.9.0-gcc-MLNX_OFED_LINUX-5.4-1.0.3.0-ubuntu18.04-x86_64/:/opt/hpcx"
+CONT="nvcr.io#nvidia/pytorch:21.09-py3"
+MOUNT="/shared/data/azure/benchmarking/NDv4/cc-slurm-ngc/nccl:/nccl,/opt/hpcx-v2.9.0-gcc-MLNX_OFED_LINUX-5.4-1.0.3.0-ubuntu18.04-x86_64:/opt/hpcx"
 
 export OMPI_MCA_pml=ucx
 export OMPI_MCA_btl=^openib
+
+env | grep "SLURMD_NODENAME="
+env | grep "SLURM_NODELIST="
 
 srun --ntasks=$SLURM_JOB_NUM_NODES \
     --container-image "${CONT}" \
     --container-name=nccl \
     --container-mounts="${MOUNT}" \
     --ntasks-per-node=1 \
-    bash -c "apt update && apt-get install -y infiniband-diags && bash /nccl/scripts/gentopo.sh > ${NCCL_TOPO_FILE}"
+    bash -c "apt update && apt-get install -y infiniband-diags "
 
-srun --gpus-per-node=8 \
+srun \
+    --gpus-per-node=8 \
     --ntasks-per-node=8 \
     --container-name=nccl \
     --container-mounts "${MOUNT}" \
