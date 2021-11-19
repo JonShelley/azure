@@ -5,9 +5,9 @@
 ##       Then copy bandwidthTest to $BASE_DIR/gpu-bwtest
 ##       
 
-BASE_DIR=/shared/data/tools
+BASE_DIR=/shared/data/azure/benchmarking/NDv4/cc-slurm-ngc/util_scripts
 
-vmId=`curl -H Metadata:true "http://169.254.169.254/metadata/instance?api-version=2019-06-04" | jq '.compute.vmId'`
+vmId=`curl -H Metadata:true "http://169.254.169.254/metadata/instance?api-version=2019-06-04" 2>/dev/null | jq '.compute.vmId'`
 echo "VM ID: $vmId"
 
 echo "Device: DtoH : HtoD"
