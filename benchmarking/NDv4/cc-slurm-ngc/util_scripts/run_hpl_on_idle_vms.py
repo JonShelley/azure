@@ -9,7 +9,7 @@ import os
 
 # Run sinfo and get idle VMs
 cmd="sinfo"
-partition="hpc"
+partition="ndmv4"
 output = subprocess.run([cmd], stdout=subprocess.PIPE).stdout.decode('utf-8')
 
 lines = output.split("\n")

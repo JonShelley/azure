@@ -13,7 +13,7 @@ export UCX_IB_ENABLE_CUDA_AFFINITY=n \
        NCCL_TOPO_FILE=/nccl-tests/topo-loop.xml
 
 CONT="nvcr.io/nvidia/pytorch:20.10-py3"
-MOUNT="/share/home/nvidia/nccl:/nccl-tests,/apps/hpcx-v2.7.3-gcc-MLNX_OFED_LINUX-5.1-2.4.6.0-ubuntu18.04-x86_64:/opt/hpcx"
+MOUNT="/share/home/nvidia/nccl:/nccl-tests,/apps/hpcx-v2.9.0-gcc-MLNX_OFED_LINUX-5.4-1.0.3.0-ubuntu20.04-x86_64:/opt/hpcx"
 
 export OMPI_MCA_pml=ucx
 export OMPI_MCA_btl=^openib
